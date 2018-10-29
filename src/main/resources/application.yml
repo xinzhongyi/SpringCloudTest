@@ -1,0 +1,12 @@
+server:
+  port: 8260
+eureka:
+  client:
+    # 控制当Spring Boot启动服务后是否将该服务注册到
+    # 服务治理服务器上
+    register-with-eureka: false
+    # 应用启动后不需要从服务治理服务器中同步已注册的服务注册列表
+    # 数据到本地
+    fetch-registry: false
+  server:
+    wait-time-in-ms-when-sync-empty: 5
