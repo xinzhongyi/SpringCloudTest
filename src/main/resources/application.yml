@@ -1,12 +1,29 @@
+spring:
+  application:
+    name: EUREKA-HA
+---
 server:
-  port: 8260
+  port: 1111
+spring:
+  # 指定profile=peer1
+  profiles: peer1
 eureka:
+  instance:
+    # 指定当profile=peer1时，主机名是peer1
+    hostname: peer1
   client:
-    # 控制当Spring Boot启动服务后是否将该服务注册到
-    # 服务治理服务器上
-    register-with-eureka: false
-    # 应用启动后不需要从服务治理服务器中同步已注册的服务注册列表
-    # 数据到本地
-    fetch-registry: false
-  server:
-    wait-time-in-ms-when-sync-empty: 5
+    service-url:
+      # 将自己注册到peer2、peer3这个Eureka上面去
+      defaultZone: http://peer2:1112/eureka/
+---
+server:
+  port: 1112
+spring:
+  profiles: peer2
+eureka:
+  instance:
+    hostname: peer2
+  client:
+    service-url:
+      defaultZone: http://peer1:1111/eureka/
+---
